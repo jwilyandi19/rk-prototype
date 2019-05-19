@@ -15,6 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/login', 'AuthController@loginIndex');
+Route::post('/login', 'AuthController@login');
+Route::get('/logout', 'AuthController@logout');
+Route::get('/register', 'AuthController@registerIndex');
+Route::post('/register', 'AuthController@register');
 
 
 //Auth Routes
