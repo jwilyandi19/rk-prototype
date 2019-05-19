@@ -15,18 +15,26 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
+//Main Route
+Route::get('/', 'DashboardController@index');
+
 //Auth Routes
-Route::get('/login', 'AuthController@loginIndex');
-Route::post('/login', 'AuthController@login');
+Route::get('/login', 'AuthController@login');
+Route::post('/login', 'AuthController@doLogin');
 Route::get('/logout', 'AuthController@logout');
-Route::get('/register', 'AuthController@registerIndex');
-Route::post('/register', 'AuthController@register');
+Route::get('/register', 'AuthController@register');
+Route::post('/register', 'AuthController@doRegister');
 
 
 Route::get('/kelas', 'KelasController@index');
+Route::post('/kelas', 'KelasController@doFind');
+Route::get('/buat-kelas', 'KelasController@create');
+Route::post('/buat-kelas', 'KelasController@doCreate');
 Route::get('/kelas/{kodeKelas}', 'KelasController@view');
 Route::get('/kelas/{kodeKelas}/edit', 'KelasController@edit');
 Route::get('/kelas/{kodeKelas}/hapus', 'KelasController@delete');
+Route::post('/kelas/{kodeKelas}/edit', 'KelasController@doEdit');
+Route::post('/kelas/{kodeKelas}/hapus', 'KelasController@doDelete');
 //Auth Routes
 Route::post('auth/','AuthController@index')->name('auth.index');
 Route::resource('materis', 'MateriController');
