@@ -15,3 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
+//Auth Routes
+Route::post('auth/','AuthController@index')->name('auth.index');
+
+
