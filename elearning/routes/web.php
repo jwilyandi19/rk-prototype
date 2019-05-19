@@ -27,6 +27,9 @@ Route::get('/kelas', 'KelasController@index');
 Route::get('/kelas/{kodeKelas}', 'KelasController@view');
 Route::get('/kelas/{kodeKelas}/edit', 'KelasController@edit');
 Route::get('/kelas/{kodeKelas}/hapus', 'KelasController@delete');
+Route::get('/kelas/{kodeKelas}/tugas/{kodeTugas}', 'TugasController@getAllTugas');
+Route::post('/kelas/{kodeKelas}/tugas/{kodeTugas}', 'TugasController@submitTugas');
+Route::post('/kelas/{kodeKelas}/penugasan/{penugasan}', 'TugasController@uploadPenugasan');
 //Auth Routes
 Route::post('auth/','AuthController@index')->name('auth.index');
 Route::resource('materis', 'MateriController');
