@@ -27,9 +27,12 @@ Route::get('/kelas', 'KelasController@index');
 Route::get('/kelas/{kodeKelas}', 'KelasController@view');
 Route::get('/kelas/{kodeKelas}/edit', 'KelasController@edit');
 Route::get('/kelas/{kodeKelas}/hapus', 'KelasController@delete');
+
+//Tugas Routes
 Route::get('/kelas/{kodeKelas}/tugas/{kodeTugas}', 'TugasController@getAllTugas');
 Route::post('/kelas/{kodeKelas}/tugas/{kodeTugas}', 'TugasController@submitTugas');
 Route::post('/kelas/{kodeKelas}/penugasan/{penugasan}', 'TugasController@uploadPenugasan');
+
 Route::get('/kelas/{kodeKelas}/materi', 'MateriController');
 Route::get('/kelas/{kodeKelas}/materi/{id}','MateriController');
 
