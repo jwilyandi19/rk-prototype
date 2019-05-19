@@ -17,7 +17,7 @@ class CreatePenggunasTable extends Migration
             $table->bigIncrements('id');
             $table->string('nrp')->unique();
             $table->string('password');
-            $table->enum('rule',['pengajar','pembelajar']);
+            $table->enum('role',['pengajar','pembelajar']);
             $table->timestamps();
         });
     }

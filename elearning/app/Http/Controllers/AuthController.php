@@ -6,62 +6,65 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Pengguna;
 use Illuminate\Hashing\BcryptHasher;
+use TheSeer\Tokenizer\Exception;
 
 class AuthController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    private $data;
+
+    public function __construct()
     {
-        
-        return view('index');
+        $this->data = [];
     }
 
-    public function login(Request $request)
+    public function login(Request $request) {
+        return \view('auth.login', $this->data);
+    }
+
+    public function doLogin(Request $request)
     {   
-        $nrp = $request->post('nrp');
-        $password = $request->post('password');
-        $pengguna = Pengguna::where('nrp','=', $nrp)->get();
-
-        $hasher = new BcryptHasher();
-        if($hasher->check($request->post('password'), $pengguna->password)){
-            $request->session()->put('UserId', $pengguna->id);
+        if($request->has(['nrp','password'])){
+            $nrp = $request->post('nrp');
+            $password = $request->post('password');
+            $pengguna = Pengguna::getByNrp($nrp);
+            if($pengguna != null){
+                $hasher = new BcryptHasher();
+                if($hasher->check($password, $pengguna->password)){
+                    $request->session()->put('userId', $pengguna->id);
+                    return Redirect::to("/");
+                }
+            }
         }
-        else {
-            return view('index');
-        }
-
+        $this->data['error'] = 'Kombinasi NRP dan Password tidak ditemukan!';
+        return $this->login($request);
     }
 
     public function logout(Request $request)
     {   
         $request->session()->flush();
-        return view('index');
+        return view('auth.login');
     }
-
     
-    public function registerIndex() {
-        return \view('user.login');
+    public function register(Request $request) {
+        return \view('auth.register', $this->data);
     }
 
-    public function register(Request $request) {
-        $data = [];
-        if($request->session()->has('userId')){
-            return Redirect::to('/dashboard');
-        }
-        $pengguna = new Pengguna();
+    public function doRegister(Request $request) {
         if($request->has('nrp') && $request->has('password')){
-            $pengguna->nrp = $request->post('nrp');
-            $hasher = new BcryptHasher();
-            $pengguna->password = $hasher->make($request->post('password'));
-            $pengguna->save();
-            $data['success'] = true;
+            $pengguna = Pengguna::getByNrp($request->post('nrp'));
+            if($pengguna == null){
+                $hasher = new BcryptHasher();
+                $pengguna = new Pengguna();
+                $pengguna->setAttribute('nrp', $request->post('nrp'));
+                $pengguna->setAttribute('password', $hasher->make($request->post('password')));
+                $pengguna->save();
+                $this->data['success'] = 'Akun telah berhasil terbuat!';
+            }else{
+                $this->data['error'] = 'NRP sudah pernah digunakan!';
+            }
         }
-        
-        return \view('user.register', $data);
+        return $this->register($request);
     }
     
     
