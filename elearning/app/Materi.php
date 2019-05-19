@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Materi extends Model
 {
-    protected $fillable = ['id_kelas','judul_materi','isi_materi'];
+    protected $fillable = ['id', 'id_kelas','judul_materi','isi_materi'];
     
 }

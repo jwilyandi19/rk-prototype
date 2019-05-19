@@ -33,10 +33,10 @@ Route::get('/kelas/{kodeKelas}/tugas/{kodeTugas}', 'TugasController@getAllTugas'
 Route::post('/kelas/{kodeKelas}/tugas/{kodeTugas}', 'TugasController@submitTugas');
 Route::post('/kelas/{kodeKelas}/penugasan/{penugasan}', 'TugasController@uploadPenugasan');
 
-Route::get('/kelas/{kodeKelas}/materi', 'MateriController');
-Route::get('/kelas/{kodeKelas}/materi/{id}','MateriController');
+Route::get('/kelas/{kodeKelas}/materi', 'MateriController@index');
+Route::get('/kelas/{kodeKelas}/materi/{id}','MateriController@view');
 
 //Auth Routes
-Route::post('auth/','AuthController@index')->name('auth.index');
+Route::post('/auth','AuthController@index')->name('auth.index');
 
 

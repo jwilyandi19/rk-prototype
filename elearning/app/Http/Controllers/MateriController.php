@@ -46,25 +46,24 @@ class MateriController extends Controller
             'id' => 2,
             'id_kelas' => $kelasId,
             'judul_materi' => 'Penting',
-            'isi_materi' => 'Bumi itu datar'
+            'isi_materi' => 'Bumi itu bulat'
         ]);
         array_push($materiList,$materi);
         array_push($materiList,$materi1);
         
-        return $materi;
+        return $materiList;
     }
 
     public function index($kodeKelas) {
         $kelas = $this->getKelas($kodeKelas);
-        $materis = $this->getAllMateris($kelas->id);
-
+        $materis = $this->getAllMateris($kelas->getKey());
         return view('materi.home', compact('materis'));
         
     }
 
     public function view($kodeKelas,$idMateri) {
         $kelas = $this->getKelas($kodeKelas);
-        $materi = $this->getMateri($kelas->id,$idMateri);
+        $materi = $this->getMateri($kelas->getKey(),$idMateri);
         return view('materi.view', compact('materi'));
     }
 
