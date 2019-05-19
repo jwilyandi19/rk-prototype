@@ -15,10 +15,16 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-
-
 //Auth Routes
+Route::get('/login', 'AuthController@loginIndex');
+Route::post('/login', 'AuthController@login');
+Route::get('/logout', 'AuthController@logout');
+Route::get('/register', 'AuthController@registerIndex');
+Route::post('/register', 'AuthController@register');
 Route::get('/','AuthController@index')->name('auth.index');
 Route::get('/login','AuthController@login')->name('auth.login');
 Route::get('/logout','AuthController@logout')->name('auth.index');
+Route::post('auth/','AuthController@index')->name('auth.index');
+Route::resource('materis', 'MateriController');
+
 
