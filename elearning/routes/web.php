@@ -11,10 +11,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
+//Auth Routes
 Route::get('/login', 'AuthController@loginIndex');
 Route::post('/login', 'AuthController@login');
 Route::get('/logout', 'AuthController@logout');
