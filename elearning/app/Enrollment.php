@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Enrollment extends Model
 {
@@ -27,7 +28,30 @@ class Enrollment extends Model
         self::query()->where("kelas_id", "=", $kelasId)->where("user_Id", "=", $userId)->delete();
     }
 
-    public static function removeByIdKelas($kelasId) {
+    public static function isUserIdEnrollingInKelasId($userId, $kelasId){
+        $result = self::query()->where('kelas_id', '=', $kelasId)->where('user_id', '=', $userId)->first();
+        return $result != null;
+    }
+
+    public static function removeByKelasId($kelasId) {
         self::query()->where("kelas_id", "=", $kelasId)->delete();
+    }
+
+    public static function getKelasByUserId($userId) {
+        $result = [];
+        $enrollments = self::query()->where("user_id", "=", $userId)->get();
+        foreach($enrollments as $enrollment){
+            $result[] = Kelas::getById($enrollment->getAttribute('id'));
+        }
+        return $result;
+    }
+
+    public static function getUsersByKelasId($kelasId){
+        $result = [];
+        $enrollments = self::query()->where("kelas_id", "=", $kelasId)->get();
+        foreach($enrollments as $enrollment){
+            $result[] = Pengguna::getById($enrollment->getAttribute('user_id'));
+        }
+        return $result;
     }
 }

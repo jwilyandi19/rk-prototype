@@ -31,10 +31,15 @@ Route::post('/kelas', 'KelasController@doFind');
 Route::get('/buat-kelas', 'KelasController@create');
 Route::post('/buat-kelas', 'KelasController@doCreate');
 Route::get('/kelas/{kodeKelas}', 'KelasController@view');
-Route::get('/kelas/{kodeKelas}/edit', 'KelasController@edit');
+Route::get('/kelas/{kodeKelas}/ubah', 'KelasController@update');
+Route::post('/kelas/{kodeKelas}/ubah', 'KelasController@doUpdate');
 Route::get('/kelas/{kodeKelas}/hapus', 'KelasController@delete');
-Route::post('/kelas/{kodeKelas}/edit', 'KelasController@doEdit');
 Route::post('/kelas/{kodeKelas}/hapus', 'KelasController@doDelete');
+Route::get('/kelas/{kodeKelas}/enroll', 'KelasController@enroll');
+Route::post('/kelas/{kodeKelas}/enroll', 'KelasController@doEnroll');
+Route::get('/kelas/{kodeKelas}/expell', 'KelasController@expell');
+Route::post('/kelas/{kodeKelas}/expell', 'KelasController@doExpell');
+
 //Auth Routes
 Route::post('auth/','AuthController@index')->name('auth.index');
 Route::resource('materis', 'MateriController');

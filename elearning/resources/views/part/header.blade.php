@@ -6,7 +6,7 @@
 
   <title>Elearning</title>
 
-  <link href="css/bootstrap/bootstrap.css" rel="stylesheet">
+  <link href="/css/bootstrap/bootstrap.css" rel="stylesheet">
 
-  <link href="css/style.css" rel="stylesheet">
+  <link href="/css/style.css" rel="stylesheet">
 </head>

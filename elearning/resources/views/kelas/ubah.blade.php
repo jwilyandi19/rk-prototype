@@ -6,7 +6,7 @@
         <div class="col-12">
             <form class="card p-4 mt-5" method="POST">
                 {{ csrf_field() }}
-                <h1 class="card-title text-center text-primary">Buat Kelas</h1>
+                <h1 class="card-title text-center text-primary">Ubah Kelas - {{$kelas->kode_kelas}}</h1>
                 @isset($success)
                     @component("alert.success")
                         {{$success}}
@@ -20,12 +20,12 @@
                 <div class="card-body p-2">
                     <div class="form-group">
                         <label for="kode_kelas">Kode Kelas</label>
-                        <input name="kodeKelas" type="text" class="form-control" id="kode_kelas" placeholder="Kode Kelas" required minlength="4">
-                        <small id="kodeHelp" class="form-text text-muted">Silahkan masukkan Kode Kelas dari kelas yang anda ingin buat</small>
+                        <input name="kodeKelas" type="text" class="form-control" id="kode_kelas" placeholder="Kode Kelas" required minlength="4" value="{{$kelas->kode_kelas}}">
+                        <small id="kodeHelp" class="form-text text-muted">Silahkan masukkan Kode Kelas dari kelas yang anda inginkan</small>
                     </div>
                     <div class="form-group">
                         <label for="nama_kelas">Nama Kelas</label>
-                        <input name="namaKelas" type="text" class="form-control" id="nama_kelas" placeholder="Nama Kelas" required minlength="4">
+                        <input name="namaKelas" type="text" class="form-control" id="nama_kelas" placeholder="Nama Kelas" required minlength="4" value="{{$kelas->nama_kelas}}">
                         <small id="namaHelp" class="form-text text-muted">Digunakan untuk menampilkan judul kelas</small>
                     </div>
                     <button type="submit" class="btn btn-primary mr-1">Submit</button>

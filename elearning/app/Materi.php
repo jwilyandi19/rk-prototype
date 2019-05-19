@@ -9,9 +9,9 @@ class Materi extends Model
 
     protected $fillable = [
         'id',
-        'nrp',
-        'password',
-        'role'
+        'id_kelas',
+        'judul_materi',
+        'isi_materi'
     ];
 
     /**

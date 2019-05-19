@@ -31,19 +31,24 @@ class Kelas extends Model
      * @return Kelas
      */
     public static function getByKodeKelas($kodeKelas) {
-        $kelas = self::query()->where('kode_kelas','=',$kodeKelas)->first();
-        return $kelas;
+        return self::query()->where('kode_kelas','=',$kodeKelas)->first();
     } 
 
+    public static function getById($id){
+        return self::query()->where('id','=',$id)->first();
+    }
+
     public static function getByUserId($userId) {
-        //MOCK LINE
-        $kelas = self::mockKelas();
-        $kelas = self::mockKelas();
-        $kelas = self::mockKelas();
-        $kelas = self::mockKelas();
+        $kelas = [];
+        $kelasIds = Enrollment::query()->where('user_id','=',$userId)->get();
+        foreach($kelasIds as $id){
+            $kelas[] = self::getById($id->getAttribute('kelas_id'));
+        }
         return $kelas;
-        //END MOCK LINE
-        $kelas = Enrollment::query()->where('user_id','=',$userId)->get();
-        return $kelas;
+    }
+
+    public function delete() {
+        Enrollment::removeByKelasId($this->getAttribute('id'));
+        $this->query()->where('id', "=", $this->getAttribute('id'))->delete();
     }
 }

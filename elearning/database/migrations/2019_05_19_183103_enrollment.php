@@ -18,6 +18,7 @@ class Enrollment extends Migration
             $blueprint->integer('kelas_id');
             $blueprint->integer('user_id')->index();
             $blueprint->unique(['kelas_id', 'user_id']);
+            $blueprint->timestamps();
         });
     }
 
@@ -28,6 +29,6 @@ class Enrollment extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('enrollments');
     }
 }
