@@ -3,82 +3,73 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Materi;
+use App\Kelas;
 
 class MateriController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+
+    private function getKelas($kodeKelas) {
+        $kelas = new Kelas();
+        $kelas->fill([
+            'id' => 1,
+            'kode_kelas' => $kodeKelas,
+            'nama_kelas' => 'PAA',
+            'id_pengajar' => 2,
+            
+        ]);
+        return $kelas;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    private function getMateri($kelasId,$materiId) {
+        $materi = new Materi();
+        $materi->fill([
+            'id' => $materiId,
+            'id_kelas' => $kelasId,
+            'judul_materi' => 'Penting',
+            'isi_materi' => 'Bumi itu datar'
+        ]);
+        return $materi;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    private function getAllMateris($kelasId) {
+        $materiList = [];
+        $materi = new Materi();
+        $materi1 = new Materi();
+        $materi->fill([
+            'id' => 1,
+            'id_kelas' => $kelasId,
+            'judul_materi' => 'Penting',
+            'isi_materi' => 'Bumi itu datar'
+        ]);
+        $materi1->fill([
+            'id' => 2,
+            'id_kelas' => $kelasId,
+            'judul_materi' => 'Penting',
+            'isi_materi' => 'Bumi itu datar'
+        ]);
+        array_push($materiList,$materi);
+        array_push($materiList,$materi1);
+        
+        return $materi;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+    public function index($kodeKelas) {
+        $kelas = $this->getKelas($kodeKelas);
+        $materis = $this->getAllMateris($kelas->id);
+
+        return view('materi.home', compact('materis'));
+        
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+    public function view($kodeKelas,$idMateri) {
+        $kelas = $this->getKelas($kodeKelas);
+        $materi = $this->getMateri($kelas->id,$idMateri);
+        return view('materi.view', compact('materi'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+
+
+
 }
