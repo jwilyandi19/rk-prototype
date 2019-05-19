@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class Tugas extends Controller
+class KelasController extends Controller
 {
     //
 }
