@@ -49,7 +49,6 @@ class TugasController extends Controller
     public function submitTugas(Request $request)
     {   
         $file = $request->file('tugas');
-        $file->getClientOriginalName();
 
         DB::table('penugasans')->insert(
             ['nrp' => $request->nrp, 'votes' => 0],
