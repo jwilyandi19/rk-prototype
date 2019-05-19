@@ -19,5 +19,6 @@ Route::get('/', function () {
 
 //Auth Routes
 Route::post('auth/','AuthController@index')->name('auth.index');
+Route::resource('materis', 'MateriController');
 
 
