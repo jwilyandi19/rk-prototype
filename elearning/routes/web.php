@@ -11,13 +11,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 
 
 //Auth Routes
-Route::post('auth/','AuthController@index')->name('auth.index');
-
+Route::get('/','AuthController@index')->name('auth.index');
+Route::get('/login','AuthController@login')->name('auth.login');
+Route::get('/logout','AuthController@logout')->name('auth.index');
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Pengguna;
+use Illuminate\Hashing\BcryptHasher;
 
 class AuthController extends Controller
 {
@@ -17,16 +19,25 @@ class AuthController extends Controller
         return view('index');
     }
 
-    public function login($id)
-    {
-        session_start();
-        $_SESSION["id"] = $id;
+    public function login(Request $request)
+    {   
+        $nrp = $request->post('nrp');
+        $password = $request->post('password');
+        $pengguna = Pengguna::where('nrp','=', $nrp)->get();
+
+        $hasher = new BcryptHasher();
+        if($hasher->check($request->post('password'), $pengguna->password)){
+            $request->session()->put('UserId', $pengguna->id);
+        }
+        else {
+            return view('index');
+        }
+
     }
 
-    public function logout()
-    {
-        session_destroy();
-
+    public function logout(Request $request)
+    {   
+        $request->session()->flush();
         return view('index');
     }
 }
