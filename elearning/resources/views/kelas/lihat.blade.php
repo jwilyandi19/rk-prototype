@@ -45,11 +45,45 @@
                             </tbody>
                         </table>
                     </div>
-                    <a href="/kelas/{{$kelas->kode_kelas}}/enroll" class="btn btn-primary ">Buat Tugas</a>
+                    <a href="" class="btn btn-primary" data-toggle="modal" data-target="#BuatTugasModal">Buat Tugas</a>
                     @endif
                 </div>
             </form>
         </div>
     </div>
+</div>
+
+
+<div class="modal" id="BuatTugasModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Membuat Penugasan</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form action="" method="post" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        {{ method_field('post') }}
+                <div class="form-group {{ !$errors->has('file') ?: 'has-error' }}">
+                    <label><h5>File</h5></label>
+                    <br>
+                    <input type="file" name="file">
+                    <span class="help-block text-danger">{{ $errors->first('file') }}</span>
+                </div>
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+      <button type="submit" class="btn btn-primary">Upload</button>
+      </div>
+
+    </div>
+  </div>
 </div>
 @endsection()
