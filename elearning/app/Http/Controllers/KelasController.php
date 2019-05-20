@@ -13,6 +13,7 @@ use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Facades\Response;
 use App\Tugas;
 use Illuminate\Support\Facades\Redirect;
+use App\Penugasan;
 
 class KelasController extends UserController
 {
@@ -78,7 +79,7 @@ class KelasController extends UserController
         }
         $this->data['isEnrolling']= Enrollment::isUserIdEnrollingInKelasId($user->getAttribute('id'), $kelas->getAttribute('id'));
         $this->data['listMateri'] = Materi::getByIdKelas($kelas->getAttribute('id'));
-        $this->data['listTugas'] = Tugas::getByKelasId($kelas->getAttribute('id'));
+        $this->data['listTugas'] =  Penugasan::getByIdKelas($kelas->getAttribute('id'));
         $this->data['isPengajar'] = $isPengajar;
         $this->data['kelas'] = $kelas;
         return View::make('kelas.lihat', $this->data);

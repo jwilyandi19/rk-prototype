@@ -45,6 +45,7 @@
                             </tbody>
                         </table>
                     </div>
+                    <a href="/kelas/{{$kelas->kode_kelas}}/enroll" class="btn btn-primary ">Buat Tugas</a>
                     @endif
                 </div>
             </form>

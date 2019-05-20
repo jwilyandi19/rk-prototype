@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Penugasan extends Model
 {
-    protected $table = 'penugasan';
+    protected $table = 'penugasans';
 
     
     protected $fillable = [
@@ -14,4 +14,9 @@ class Penugasan extends Model
         'id_kelas',
         'file'
     ];
+
+    public static function getByIdKelas($idKelas){
+        $listMateri = self::query()->where('id_kelas','=',$idKelas)->get();
+        return $listMateri;
+    }
 }
