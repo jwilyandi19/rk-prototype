@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Tugas;
+use Illuminate\Support\Facades\DB;
 
 class TugasController extends Controller
 {   
@@ -39,11 +40,17 @@ class TugasController extends Controller
 
     public function uploadPenugasan(Request $request){
 
-        $file = $request->file('penugasan');
+        $file = $request->file('file');
+        
         DB::table('penugasans')->insert(
-            ['id_kelas' => $request->idKelas, 'votes' => 0],
-            ['file' => $file->getClientOriginalName(), 'votes' => 0],
-        );
+            ['id_kelas' => $request->idKelas,
+             'file' => $file->getClientOriginalName()
+            ]);
+
+        $tujuan_upload = 'Penugasan/'.$request->idKelas;
+	    $file->move($tujuan_upload,$file->getClientOriginalName());
+        
+        return $request->idKelas;
     }
 
     public function submitTugas(Request $request)

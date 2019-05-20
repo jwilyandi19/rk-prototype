@@ -45,7 +45,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <a href="" class="btn btn-primary" data-toggle="modal" data-target="#BuatTugasModal">Buat Tugas</a>
+                    <a href="/kelas/{{$kelas->kode_kelas}}/penugasan" class="btn btn-primary" data-toggle="modal" data-target="#BuatTugasModal">Buat Tugas</a>
                     @endif
                 </div>
             </form>
@@ -66,23 +66,22 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-        <form action="" method="post" enctype="multipart/form-data">
-                        {{ csrf_field() }}
-                        {{ method_field('post') }}
-                <div class="form-group {{ !$errors->has('file') ?: 'has-error' }}">
+        <form action="/kelas/{{$kelas->kode_kelas}}/penugasan/" method="post" enctype="multipart/form-data">
+                {{ csrf_field() }}
+                <div class="form-group">
                     <label><h5>File</h5></label>
                     <br>
+                    <input type="text" name="idKelas" value="{{$kelas->id}}" hidden>
                     <input type="file" name="file">
-                    <span class="help-block text-danger">{{ $errors->first('file') }}</span>
                 </div>
-        </form>
+        
       </div>
 
       <!-- Modal footer -->
       <div class="modal-footer">
       <button type="submit" class="btn btn-primary">Upload</button>
       </div>
-
+      </form>
     </div>
   </div>
 </div>

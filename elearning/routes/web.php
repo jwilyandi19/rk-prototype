@@ -44,7 +44,7 @@ Route::post('/kelas/{kodeKelas}/expell', 'KelasController@doExpell');
 //Tugas Routes
 Route::get('/kelas/{kodeKelas}/tugas/{kodeTugas}', 'TugasController@getAllTugas');
 Route::post('/kelas/{kodeKelas}/tugas/{kodeTugas}', 'TugasController@submitTugas');
-Route::post('/kelas/{kodeKelas}/penugasan/{penugasan}', 'TugasController@uploadPenugasan');
+Route::post('/kelas/{kodeKelas}/penugasan/', 'TugasController@uploadPenugasan');
 
 Route::get('/kelas/{kodeKelas}/materi', 'MateriController@index');
 Route::get('/kelas/{kodeKelas}/materi/{id}','MateriController@view');
