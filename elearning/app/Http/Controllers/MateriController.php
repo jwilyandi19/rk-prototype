@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Materi;
 use App\Kelas;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Redirect;
 
 class MateriController extends UserController
 {
@@ -18,9 +19,12 @@ class MateriController extends UserController
         }
         $kelas = Kelas::getByKodeKelas($kodeKelas);
         $this->data['kelas'] = $kelas;
+        $userId = $user->getAttribute('id');
+        $isPengajar = $kelas->getAttribute('id_pengajar') == $userId;;
         if($materi->getAttribute('id_kelas')!=$kelas->getAttribute('id')) {
             return \abort(403, "Forbidden");
         }
+        $this->data['isPengajar'] = $isPengajar;
         $this->data['materi'] = $materi;
         return View::make('materi.lihat', $this->data);
     }
@@ -52,6 +56,43 @@ class MateriController extends UserController
         }
         $this->data['error'] = "Materi gagal terbuat";
         return View::make('materi.buat', $this->data);
+    }
+
+    public function update(Request $request, $kodeKelas, $id) {
+        $user = $this->getSessionUser($request);
+        $kelas = Kelas::getByKodeKelas($kodeKelas);
+        $materi = Materi::getById($id);
+        if($materi == null) {
+            return \abort(404,"Not Found");
+        }
+        if($request->has('status')) {
+            $this->data['success'] = "Berhasil mengupdate materi";
+        }
+        $this->data['materi'] = $materi;
+        return View::make('materi.ubah', $this->data);
+    }
+
+    public function doUpdate(Request $request, $kodeKelas, $id) {
+        $user = $this->getSessionUser($request);
+        $kelas = Kelas::getByKodeKelas($kodeKelas);
+        $materi = Materi::getById($id);
+        if($materi == null) {
+            return \abort(404, "Not Found");
+        }
+        if($materi->getAttribute('id_kelas')!=$kelas->getAttribute('id')) {
+            return \abort(403, "Forbidden");
+        }
+
+        if($request->has(["judulMateri","isiMateri"])){
+            $materi->setAttribute("judul_materi", $request->post('judulMateri'));
+            $materi->setAttribute("isi_materi", $request->post('isiMateri'));
+            $materi->save();
+            return Redirect::to("/kelas/".$kelas->getAttribute('kode_kelas')."/materi/".$materi->getAttribute('id').'/ubah?status=1');
+        }
+        $this->data['materi'] = $materi;
+        $this->data['error'] = "Gagal update materi";
+        return View::make('materi.ubah', $this->data);
+
     }
 
 
