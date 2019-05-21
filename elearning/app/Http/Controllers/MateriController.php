@@ -5,66 +5,53 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Materi;
 use App\Kelas;
+use Illuminate\Support\Facades\View;
 
-class MateriController extends Controller
+class MateriController extends UserController
 {
 
-    private function getKelas($kodeKelas) {
-        $kelas = new Kelas();
-        $kelas->fill([
-            'id' => 1,
-            'kode_kelas' => $kodeKelas,
-            'nama_kelas' => 'PAA',
-            'id_pengajar' => 2,
-            
-        ]);
-        return $kelas;
+    public function index(Request $request, $kodeKelas, $id) {
+        $user = $this->getSessionUser($request);
+        $materi = Materi::getById($id);
+        if($materi == null) {
+            return \abort(404, "Not Found");
+        }
+        $kelas = Kelas::getByKodeKelas($kodeKelas);
+        $this->data['kelas'] = $kelas;
+        if($materi->getAttribute('id_kelas')!=$kelas->getAttribute('id')) {
+            return \abort(403, "Forbidden");
+        }
+        $this->data['materi'] = $materi;
+        return View::make('materi.lihat', $this->data);
     }
 
-    private function getMateri($kelasId,$materiId) {
-        $materi = new Materi();
-        $materi->fill([
-            'id' => $materiId,
-            'id_kelas' => $kelasId,
-            'judul_materi' => 'Penting',
-            'isi_materi' => 'Bumi itu datar'
-        ]);
-        return $materi;
+    public function create(Request $request, $kodeKelas) {
+        $user = $this->getSessionUser($request);
+        $kelas = Kelas::getByKodeKelas($kodeKelas);
+        $this->data['kelas'] = $kelas;
+        return View::make('materi.buat', $this->data);
     }
 
-    private function getAllMateris($kelasId) {
-        $materiList = [];
-        $materi = new Materi();
-        $materi1 = new Materi();
-        $materi->fill([
-            'id' => 1,
-            'id_kelas' => $kelasId,
-            'judul_materi' => 'Penting',
-            'isi_materi' => 'Bumi itu datar'
-        ]);
-        $materi1->fill([
-            'id' => 2,
-            'id_kelas' => $kelasId,
-            'judul_materi' => 'Penting',
-            'isi_materi' => 'Bumi itu bulat'
-        ]);
-        array_push($materiList,$materi);
-        array_push($materiList,$materi1);
-        
-        return $materiList;
-    }
-
-    public function index($kodeKelas) {
-        $kelas = $this->getKelas($kodeKelas);
-        $materis = $this->getAllMateris($kelas->getKey());
-        return view('materi.home', compact('materis'));
-        
-    }
-
-    public function view($kodeKelas,$idMateri) {
-        $kelas = $this->getKelas($kodeKelas);
-        $materi = $this->getMateri($kelas->getKey(),$idMateri);
-        return view('materi.view', compact('materi'));
+    public function doCreate(Request $request, $kodeKelas) {
+        $user = $this->getSessionUser($request);
+        $kelas = Kelas::getByKodeKelas($kodeKelas);
+        if($request->has(["judulMateri","isiMateri"])){
+            $materi = new Materi();
+            $judulMateri = $request->post("judulMateri");
+            $isiMateri = $request->post("isiMateri");
+            $materi->fill(
+                [
+                    'id_kelas' => $kelas->getAttribute('id'),
+                    'judul_materi'=> $judulMateri,
+                    'isi_materi'=> $isiMateri
+                ]
+            );
+            $materi->save();
+            $this->data['success'] = "Berhasil membuat materi";
+            return View::make('materi.buat',$this->data);
+        }
+        $this->data['error'] = "Materi gagal terbuat";
+        return View::make('materi.buat', $this->data);
     }
 
 

@@ -25,7 +25,7 @@ Route::get('/logout', 'AuthController@logout');
 Route::get('/register', 'AuthController@register');
 Route::post('/register', 'AuthController@doRegister');
 
-
+//Kelas Routes
 Route::get('/kelas', 'KelasController@index');
 Route::post('/kelas', 'KelasController@doFind');
 Route::get('/buat-kelas', 'KelasController@create');
@@ -40,14 +40,15 @@ Route::post('/kelas/{kodeKelas}/enroll', 'KelasController@doEnroll');
 Route::get('/kelas/{kodeKelas}/expell', 'KelasController@expell');
 Route::post('/kelas/{kodeKelas}/expell', 'KelasController@doExpell');
 
+//Materi Routes
+Route::get('/kelas/{kodeKelas}/materi/{id}','MateriController@index');
+Route::get('/kelas/{kodeKelas}/buat-materi','MateriController@create');
+Route::post('/kelas/{kodeKelas}/buat-materi','MateriController@doCreate');
 
 //Tugas Routes
 Route::get('/kelas/{kodeKelas}/tugas/{kodeTugas}', 'TugasController@getAllTugas');
 Route::post('/kelas/{kodeKelas}/tugas/{kodeTugas}', 'TugasController@submitTugas');
 Route::post('/kelas/{kodeKelas}/penugasan/', 'TugasController@uploadPenugasan');
-
-Route::get('/kelas/{kodeKelas}/materi', 'MateriController@index');
-Route::get('/kelas/{kodeKelas}/materi/{id}','MateriController@view');
 
 //Auth Routes
 Route::post('/auth','AuthController@index')->name('auth.index');

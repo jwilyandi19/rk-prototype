@@ -59,7 +59,7 @@ class TugasController extends Controller
 
         DB::table('penugasans')->insert(
             ['nrp' => $request->nrp, 'votes' => 0],
-            ['penugasans_id' => $request->penugasansId, 'votes' => 0],
+            ['penugasans_id' => $request->penugasansId, 'votes' => 0]
         );
     }
 }

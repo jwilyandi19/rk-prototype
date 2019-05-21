@@ -19,6 +19,7 @@
                         @if($isPengajar)
                         <a href="/kelas/{{$kelas->kode_kelas}}/ubah" class="btn btn-outline-primary">Ubah Kelas</a>
                         <a href="/kelas/{{$kelas->kode_kelas}}/hapus" class="btn btn-danger">Hapus Kelas</a>
+                        <a href="/kelas/{{$kelas->kode_kelas}}/buat-materi" class="btn btn-outline-primary">Buat Materi</a>
                         @endif
                     </div>
                     @if($isPengajar)
