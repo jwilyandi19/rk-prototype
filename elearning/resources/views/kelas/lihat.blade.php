@@ -19,7 +19,7 @@
                         @if($isPengajar)
                         <a href="/kelas/{{$kelas->kode_kelas}}/ubah" class="btn btn-outline-primary">Ubah Kelas</a>
                         <a href="/kelas/{{$kelas->kode_kelas}}/hapus" class="btn btn-danger">Hapus Kelas</a>
-                        <a href="/kelas/{{$kelas->kode_kelas}}/buat-materi" class="btn btn-outline-primary">Buat Materi</a>
+                        <a href="/kelas/{{$kelas->kode_kelas}}/buat-materi" class="btn btn-outline-primary">Tambah Materi</a>
                         @endif
                     </div>
                     @if($isPengajar)
@@ -46,8 +46,35 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="flex-fill">
+                        <h1 class="text-primary text-center">Daftar Materi</h1>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Judul</th>
+                                    <th>Edit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($listMateri as $materi)
+                                @component('kelas.part.materi')
+                                    @slot('judul')
+                                        {{$materi->judul_materi}}
+                                    @endslot
+                                    @slot('kodeKelas')
+                                        {{$kelas->kode_kelas}}
+                                    @endslot
+                                    @slot('id')
+                                        {{$materi->id}}
+                                    @endslot
+                                @endcomponent
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                     <a href="/kelas/{{$kelas->kode_kelas}}/penugasan" class="btn btn-primary" data-toggle="modal" data-target="#BuatTugasModal">Buat Tugas</a>
                     @endif
+                    
                 </div>
             </form>
         </div>
