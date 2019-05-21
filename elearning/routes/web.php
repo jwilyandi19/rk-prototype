@@ -46,6 +46,9 @@ Route::get('/kelas/{kodeKelas}/buat-materi','MateriController@create');
 Route::post('/kelas/{kodeKelas}/buat-materi','MateriController@doCreate');
 Route::get('/kelas/{kodeKelas}/materi/{id}/ubah','MateriController@update');
 Route::post('/kelas/{kodeKelas}/materi/{id}/ubah','MateriController@doUpdate');
+Route::get('/kelas/{kodeKelas}/materi/{id}/hapus','MateriController@delete');
+Route::post('/kelas/{kodeKelas}/materi/{id}/hapus','MateriController@doDelete');
+
 
 //Tugas Routes
 Route::get('/kelas/{kodeKelas}/tugas/{kodeTugas}', 'TugasController@getAllTugas');

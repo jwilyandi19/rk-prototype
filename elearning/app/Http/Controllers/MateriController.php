@@ -66,7 +66,7 @@ class MateriController extends UserController
             return \abort(404,"Not Found");
         }
         if($request->has('status')) {
-            $this->data['success'] = "Berhasil mengupdate materi";
+            $this->data['success'] = "Berhasil mengubah materi";
         }
         $this->data['materi'] = $materi;
         return View::make('materi.ubah', $this->data);
@@ -90,9 +90,43 @@ class MateriController extends UserController
             return Redirect::to("/kelas/".$kelas->getAttribute('kode_kelas')."/materi/".$materi->getAttribute('id').'/ubah?status=1');
         }
         $this->data['materi'] = $materi;
-        $this->data['error'] = "Gagal update materi";
+        $this->data['error'] = "Gagal ubah materi";
         return View::make('materi.ubah', $this->data);
+    }
 
+    public function delete(Request $request, $kodeKelas, $id) {
+        $user = $this->getSessionUser($request);
+        $kelas = Kelas::getByKodeKelas($kodeKelas);
+        $materi = Materi::getById($id);
+
+        if($materi==null) {
+            return \abort(404, "Not Found");
+        }
+        $this->data['kelas'] = $kelas;
+        $this->data['materi'] = $materi;
+        if($materi->getAttribute('id_kelas')!=$kelas->getAttribute('id')) {
+            return \abort(403, "Forbidden");
+        }
+        return View::make('materi.hapus', $this->data);
+    }
+
+    public function doDelete(Request $request, $kodeKelas, $id) {
+        $user = $this->getSessionUser($request);
+        $kelas = Kelas::getByKodeKelas($kodeKelas);
+        $materi = Materi::getById($id);
+
+        if($materi==null) {
+            return \abort(404, "Not Found");
+        }
+        if($materi->getAttribute('id_kelas')!=$kelas->getAttribute('id')) {
+            return \abort(403, "Forbidden");
+        }
+        $materi->delete();
+        return Redirect::to("/kelas/".$kelas->getAttribute('kode_kelas'));
+
+
+
+        
     }
 
 
