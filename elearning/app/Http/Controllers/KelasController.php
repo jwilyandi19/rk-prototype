@@ -79,9 +79,10 @@ class KelasController extends UserController
         }
         $this->data['isEnrolling']= Enrollment::isUserIdEnrollingInKelasId($user->getAttribute('id'), $kelas->getAttribute('id'));
         $this->data['listMateri'] = Materi::getByIdKelas($kelas->getAttribute('id'));
-        $this->data['listTugas'] =  Penugasan::getByIdKelas($kelas->getAttribute('id'));
+        $this->data['listPenugasan'] =  Penugasan::getByIdKelas($kelas->getAttribute('id'));
         $this->data['isPengajar'] = $isPengajar;
         $this->data['kelas'] = $kelas;
+        $this->data['user'] = $user;
         return View::make('kelas.lihat', $this->data);
     }
 

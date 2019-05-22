@@ -6,60 +6,63 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Tugas;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
+use App\Penugasan;
+use App\Kelas;
 
-class TugasController extends Controller
+class TugasController extends UserController
 {   
-    private function mockAllTugas($kelasId) {
-        if(getenv('APP_DEBUG')){
-            
-            $tugas= [];
-            for ($i=0; $i < 5; $i++) { 
-                $tugas[$i] = new Tugas();
-                $tugas[$i]->fill(
-                    ['id' => $i,
-                    'nrp' => 'nrp_'.$i,
-                    'penugasans_id'=> 'penugasans_id'.$i]);
-            }
-
-            return $tugas;
-        }else{
-            //TODO : Connect Database
-        }
-    }
 
     public function index()
     {
 
     }
 
-    public function getAllTugas(Request $request)
+    public function AllTugas(Request $request, $kodeKelas, $id)
     {   
-        $tugas= $this->mockAllTugas('kelas');
-        return json_encode($tugas);
+        $user = $this->getSessionUser($request);
+        $kelas = Kelas::getByKodeKelas($kodeKelas);
+        $tugas = Tugas::getByPenugasansId($id);
+        if ($kelas == null) {
+            return \abort(404, "Not Found");
+        }
+
+        $this->data['user'] = $user;
+        $this->data['tugas'] = $tugas;
+        $this->data['kelas'] = $kelas;
+        return View::make('tugas.lihat', $this->data);
     }
 
-    public function uploadPenugasan(Request $request){
+    public function uploadPenugasan(Request $request, $kodeKelas){
 
         $file = $request->file('file');
-        
-        DB::table('penugasans')->insert(
+
+        $penugasan = new Penugasan();
+        $penugasan->fill(
             ['id_kelas' => $request->idKelas,
              'file' => $file->getClientOriginalName()
-            ]);
-
-        $tujuan_upload = 'Penugasan/'.$request->idKelas;
+            ]
+        );
+        $penugasan->save();   
+        $tujuan_upload = 'resource/kelas/'.$kodeKelas.'//Penugasan/'.$penugasan->id;
 	    $file->move($tujuan_upload,$file->getClientOriginalName());
         
-        return $request->idKelas;
+        return redirect()->back();
     }
 
-    public function submitTugas(Request $request)
-    {   
-        $file = $request->file('tugas');
 
-        DB::table('penugasans')->insert(
-            ['nrp' => $request->nrp, 'votes' => 0],
-            ['penugasans_id' => $request->penugasansId, 'votes' => 0]
-        );
+    public function submitTugas(Request $request, $kodeKelas)
+    {   
+        $file = $request->file('file');
+
+        DB::table('tugas')->insert([
+            'nrp' => $request->nrp, 
+            'penugasans_id' => $request->idTugas,
+            'file' => $file->getClientOriginalName()
+            ]);
+        $tujuan_upload = 'resource/kelas/'.$kodeKelas.'//Tugas/'.$request->idTugas;
+        $file->move($tujuan_upload,$file->getClientOriginalName());
+        
+        return redirect()->back();
     }
 }

@@ -51,9 +51,10 @@ Route::post('/kelas/{kodeKelas}/materi/{id}/hapus','MateriController@doDelete');
 
 
 //Tugas Routes
-Route::get('/kelas/{kodeKelas}/tugas/{kodeTugas}', 'TugasController@getAllTugas');
-Route::post('/kelas/{kodeKelas}/tugas/{kodeTugas}', 'TugasController@submitTugas');
+Route::get('/kelas/{kodeKelas}/tugas/{idPenugasan}', 'TugasController@AllTugas');
+Route::post('/kelas/{kodeKelas}/tugas/', 'TugasController@submitTugas');
 Route::post('/kelas/{kodeKelas}/penugasan/', 'TugasController@uploadPenugasan');
+Route::get('/kelas/{idKelas}/penugasan/{file}', 'TugasController@downloadPenugasan');
 
 //Auth Routes
 Route::post('/auth','AuthController@index')->name('auth.index');

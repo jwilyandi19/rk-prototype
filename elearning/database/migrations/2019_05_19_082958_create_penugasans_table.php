@@ -15,8 +15,9 @@ class CreatePenugasansTable extends Migration
     {
         Schema::create('penugasans', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('id_kelas')->unique();
+            $table->string('id_kelas')->index();
             $table->string('file');
+            $table->timestamps();
         });
     }
 

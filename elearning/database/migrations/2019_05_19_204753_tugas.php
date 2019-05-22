@@ -13,12 +13,12 @@ class Tugas extends Migration
      */
     public function up()
     {
-        Schema::create("tugas", function(Blueprint $bluepring){
-            $bluepring->timestamps();
-            $bluepring->bigIncrements('id');
-            $bluepring->integer('kelas_id')->index();
-            $bluepring->string('judul_tugas');
-            $bluepring->string('deskripisi_tugas');
+        Schema::create("tugas", function(Blueprint $table){
+            $table->bigIncrements('id');
+            $table->string('nrp')->index();
+            $table->string('penugasans_id')->index();
+            $table->string('file');
+            $table->timestamps();
         });
     }
 
