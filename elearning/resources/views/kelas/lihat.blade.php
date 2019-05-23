@@ -49,6 +49,7 @@
                         </table>
                     </div>
                     @endif
+                    @if($isEnrolling)
                     <div class="flex-fill">
                         <h1 class="text-primary text-center">Daftar Materi</h1>
                         <table class="table">
@@ -108,6 +109,7 @@
                             </tbody>
                         </table>
                     </div>
+                    @endif
                     @if($isPengajar)
                     <a href="/kelas/{{$kelas->kode_kelas}}/penugasan" class="btn btn-primary" data-toggle="modal" data-target="#BuatTugasModal">Buat Tugas</a>
                     @endif

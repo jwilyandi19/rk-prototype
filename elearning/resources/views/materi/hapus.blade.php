@@ -9,8 +9,8 @@
                 <h1 class="card-title text-center text-primary">Hapus Materi</h1>    
                 <h5 class="text-center text-secondary">Apakah anda yakin ingin menghapus materi ini?</h5>            
                 <div class="card-body p-2 text-center">
-                    <button type="submit" class="btn btn-danger mr-1">Hapus</button>
-                    <a href="/kelas/{{$kelas->kode_kelas}}/materi/{{$materi->id}}" class="btn btn-outline-primary">Batal</a>
+                    <button type="submit" class="btn btn-danger mr-1">Ya</button>
+                    <a href="/kelas/{{$kelas->kode_kelas}}/materi/{{$materi->id}}" class="btn btn-outline-primary">Tidak</a>
                 </div>
             </form>
         </div>

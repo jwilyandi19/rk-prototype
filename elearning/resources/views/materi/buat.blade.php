@@ -6,7 +6,7 @@
         <div class="col-12">
             <form class="card p-4 mt-5" method="POST">
                 {{ csrf_field() }}
-                <h1 class="card-title text-center text-primary">Buat Materi</h1>
+                <h1 class="card-title text-center text-primary">Tambah Materi</h1>
                 @isset($success)
                     @component("alert.success")
                         {{$success}}
@@ -28,7 +28,7 @@
                         <textarea name="isiMateri" class="form-control" id="isi_materi" placeholder="Isi materimu di sini" required minlength="4"></textarea> 
                         <small id="isiHelp" class="form-text text-muted">Silahkan masukkan isi materi yang anda ingin buat</small>
                     </div>
-                    <button type="submit" class="btn btn-primary mr-1">Submit</button>
+                    <button type="submit" class="btn btn-primary mr-1">Tambah</button>
                 </div>
             </form>
         </div>

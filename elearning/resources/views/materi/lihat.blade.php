@@ -10,8 +10,8 @@
                 @if($isPengajar)
                 <div class="card-body p-2">
                     <div class="flex-fill text-right">
-                        <a class="btn btn-primary" href="/kelas/{{$kelas->kode_kelas}}/materi/{{$materi->id}}/ubah">Ubah</a>
-                        <a class="btn btn-primary" href="/kelas/{{$kelas->kode_kelas}}/materi/{{$materi->id}}/hapus">Hapus</a>
+                        <a class="btn btn-primary" href="/kelas/{{$kelas->kode_kelas}}/materi/{{$materi->id}}/ubah">Ubah Materi</a>
+                        <a class="btn btn-primary" href="/kelas/{{$kelas->kode_kelas}}/materi/{{$materi->id}}/hapus">Hapus Materi</a>
                     </div>
                 </div>
                 @endif
